@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
-import t1708m.fashion.entity.HelloOrder;
-import t1708m.fashion.entity.HelloOrderDetail;
+import t1708m.fashion.entity.Order;
+import t1708m.fashion.entity.OrderDetail;
 import t1708m.fashion.entity.Product;
 import t1708m.fashion.exception.NotEnoughProductsInStockException;
 import t1708m.fashion.repository.OrderDetailRepository;
@@ -25,7 +25,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private Map<Product, Integer> products = new HashMap<>();
 
-    private List<HelloOrderDetail> orderDetailMap = new ArrayList<>();
+    private List<OrderDetail> orderDetailMap = new ArrayList<>();
 
     @Autowired
     OrderDetailRepository orderDetailRepository;
@@ -54,7 +54,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void addOrderDetail(HelloOrderDetail orderDetail) {
+    public void addOrderDetail(OrderDetail orderDetail) {
         if (orderDetailMap.contains(orderDetail)) {
             int index = orderDetailMap.indexOf(orderDetail);
             orderDetail.setQuantity(orderDetail.getQuantity() + orderDetailMap.get(index).getQuantity());
@@ -96,8 +96,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      * @return unmodifiable copy of the map
      */
     @Override
-    public List<HelloOrderDetail> getOrderDetailInCart() {
+    public List<OrderDetail> getOrderDetailInCart() {
         return orderDetailMap;
+    }
+
+    @Override
+    public void checkout() throws NotEnoughProductsInStockException {
+
     }
 
     /**
@@ -106,27 +111,35 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      * @throws t1708m.fashion.exception.NotEnoughProductsInStockException
      */
     @Override
-    public void checkout() throws NotEnoughProductsInStockException {
+    public void checkout(Order order) throws NotEnoughProductsInStockException {
         Product product;
+        order.setTotalPrice(this.getTotal());
+        Set<OrderDetail> orderDetailSet = new HashSet<>(orderDetailMap);
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             // Refresh quantity for every product before checking
             product = productRepository.findById((int) entry.getKey().getId());
             if (product.getQuantity() < entry.getValue())
                 throw new NotEnoughProductsInStockException(product);
-            entry.getKey().setQuantity(product.getQuantity() - entry.getValue());
+            product.setQuantity(product.getQuantity() - entry.getValue());
+            productRepository.save(product);
+            OrderDetail orderDetail = new OrderDetail(entry.getValue(), product);
+            orderDetail.setOrder(order);
+            orderDetailRepository.save(orderDetail);
+            orderDetailSet.add(orderDetail);
         }
-//        productRepository.save(products.);
+        order.setOrderDetails(orderDetailSet);
+        orderRepository.save(order);
         productRepository.flush();
         products.clear();
     }
 
     @Override
-    public void checkOut(HelloOrder order) throws NotEnoughProductsInStockException {
-        Set<HelloOrderDetail> orderDetailSet = new HashSet<>(orderDetailMap);
+    public void checkOut(Order order) throws NotEnoughProductsInStockException {
+        Set<OrderDetail> orderDetailSet = new HashSet<>(orderDetailMap);
         order.setOrderDetails(orderDetailSet);
         order.setTotalPrice(this.getTotal());
         orderRepository.save(order);
-        for (HelloOrderDetail orderDetail : orderDetailMap) {
+        for (OrderDetail orderDetail : orderDetailMap) {
             orderDetail.setOrder(order);
             System.out.println(orderDetail.getId());
             orderDetailRepository.save(orderDetail);

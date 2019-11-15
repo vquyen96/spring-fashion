@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class HelloOrderDetail {
+public class OrderDetail {
 
     @EmbeddedId
     private OrderDetailId id;
@@ -25,7 +25,7 @@ public class HelloOrderDetail {
      */
     @ManyToOne
     @JoinColumn(name = "order_id", insertable = false, updatable = false)
-    private HelloOrder order;
+    private Order order;
 
     /**
      * Trả lời câu hỏi order detail này của sản phẩm nào.
@@ -36,7 +36,7 @@ public class HelloOrderDetail {
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
 
-    public HelloOrderDetail(int quantity, Product product) {
+    public OrderDetail(int quantity, Product product) {
         this.quantity = quantity;
         this.product = product;
     }

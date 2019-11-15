@@ -39,7 +39,7 @@ public class Account {
      * Tài khoản của người dùng có thể tạo nhiều order, trường này thể hiện những order của người dùng này.
      */
     @OneToMany(mappedBy = "createdBy")
-    private Set<HelloOrder> createdOrders;
+    private Set<Order> createdOrders;
 
     /**
      * Tài khoản admin có thể update trạng thái order, chuyển các trạng thái thành công, huỷ... Trường này
@@ -47,7 +47,7 @@ public class Account {
      * Trường này chỉ tồn tại nếu là admin hệ thống. Role là 99.
      */
     @OneToMany(mappedBy = "updatedBy")
-    private Set<HelloOrder> updatedOrders;
+    private Set<Order> updatedOrders;
 
     public enum Role {
 

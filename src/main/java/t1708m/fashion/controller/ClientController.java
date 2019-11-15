@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import t1708m.fashion.DTO.OrderDTO;
-import t1708m.fashion.entity.HelloOrder;
-import t1708m.fashion.entity.HelloOrderDetail;
+import t1708m.fashion.entity.Order;
+import t1708m.fashion.entity.OrderDetail;
 import t1708m.fashion.entity.Product;
 import t1708m.fashion.service.ProductService;
 import t1708m.fashion.service.ShoppingCartService;
@@ -77,17 +77,17 @@ public class ClientController {
 //        HelloOrderDetail orderDetail = new HelloOrderDetail(1, product1);
 //        shoppingCartService.addOrderDetail(orderDetail);
         shoppingCartService.addProduct(product);
-        model.addAttribute("orderDetails", new ArrayList<HelloOrderDetail>());
+        model.addAttribute("orderDetails", new ArrayList<OrderDetail>());
         model.addAttribute("products", shoppingCartService.getProductsInCart());
         model.addAttribute("total", shoppingCartService.getTotal());
-        model.addAttribute("order", new HelloOrder());
+        model.addAttribute("order", new Order());
 
         return "client/shopping-cart";
     }
 
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model) {
-        List<HelloOrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();
+        List<OrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();
         System.out.println(orderDetails.size());
         System.out.println(shoppingCartService.getOrderDetailInCart());
         System.out.println(shoppingCartService.getTotal());
@@ -101,13 +101,13 @@ public class ClientController {
 
     @GetMapping("/checkout")
     public String checkOut(Model model) {
-        HelloOrder order = new HelloOrder();
+        Order order = new Order();
         shoppingCartService.checkOut(order);
-        List<HelloOrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();
+        List<OrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();
         model.addAttribute("orderDetails", orderDetails);
         model.addAttribute("products", shoppingCartService.getOrderDetailInCart());
         model.addAttribute("total", shoppingCartService.getTotal());
-        model.addAttribute("order", new HelloOrder());
+        model.addAttribute("order", new Order());
 
         return "client/shopping-cart";
     }

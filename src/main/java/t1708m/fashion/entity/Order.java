@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class HelloOrder {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +53,7 @@ public class HelloOrder {
      * Thể hiện trong order này có những sản phẩm nào với số lượng bao nhiêu.
      * */
     @OneToMany(mappedBy = "order")
-    private Set<HelloOrderDetail> orderDetails;
+    private Set<OrderDetail> orderDetails;
 
     public enum Status {
 
@@ -74,6 +74,6 @@ public class HelloOrder {
         }
     }
 
-    public HelloOrder() {
+    public Order() {
     }
 }

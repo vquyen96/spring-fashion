@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import t1708m.fashion.entity.HelloOrder;
-import t1708m.fashion.entity.HelloOrderDetail;
+import t1708m.fashion.entity.Order;
+import t1708m.fashion.entity.OrderDetail;
 import t1708m.fashion.entity.Product;
 import t1708m.fashion.exception.NotEnoughProductsInStockException;
 import t1708m.fashion.service.ProductService;
@@ -40,7 +40,7 @@ public class CartController {
     @GetMapping("/shoppingCart")
     public ModelAndView shoppingCart() {
         Product product = new Product("abc", BigDecimal.valueOf(30000), 40, "Hello");
-        HelloOrderDetail orderDetail = new HelloOrderDetail(2, product);
+        OrderDetail orderDetail = new OrderDetail(2, product);
         shoppingCartService.addOrderDetail(orderDetail);
         System.out.println("Order detail : " + orderDetail.getProduct().getName());
         logger.info("Order detail : " + orderDetail.getProduct().getName());
@@ -65,7 +65,7 @@ public class CartController {
     }
 
     @PostMapping("/shoppingCart/checkout")
-    public ModelAndView checkout(@ModelAttribute Model model,  @Valid HelloOrder order) {
+    public ModelAndView checkout(@ModelAttribute Model model,  @Valid Order order) {
         try {
             shoppingCartService.checkout();
         } catch (NotEnoughProductsInStockException e) {
