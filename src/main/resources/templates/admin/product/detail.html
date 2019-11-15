@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{admin/admin-layout/layout}">
+<head>
+    <title>Index</title>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="kt-portlet">
+        <!--begin::Form-->
+        <form class="kt-form" method="get" th:action="@{product}">
+            <div class="kt-portlet__body">
+                <div class="kt-form__section kt-form__section--first">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Name:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.name}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Price:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.price}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Description:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.description}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Image:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.image}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Size:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.size}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Color:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Gender:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.gender}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Type:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.type}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Created At:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.createdAt}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Updated At:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.updatedAt}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Deleted At:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.deletedAt}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Status:</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" th:value="${product.status}">
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+
+</div>
+</body>
+</html>

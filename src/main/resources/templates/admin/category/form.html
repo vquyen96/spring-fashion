@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{/admin/admin-layout/layout}">
+<head>
+    <title>Index</title>
+
+</head>
+<body>
+
+
+<div layout:fragment="content" >
+
+    <div class="kt-portlet">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon kt-hidden">
+            <i class="la la-gear"></i>
+            </span>
+                <h3 class="kt-portlet__head-title">
+                    Form Repeater Example
+                </h3>
+            </div>
+        </div>
+        <!--begin::Form-->
+        <form th:action="@{/admin/category/create}" th:object="${category}" th:method="post" class="kt-form">
+            <div class="kt-portlet__body">
+                <div class="kt-form__section kt-form__section--first">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label" for="name">name</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" id="name" th:field="*{name}">
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label" for="price">Price</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" id="price" th:field="*{price}">
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label" for="description">Gender</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" id="description" th:field="*{gender}">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label" for="image">Image</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" id="image" th:field="*{image}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label" for="status">Status</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" id="status" th:field="*{status}">
+                        </div>
+                    </div>
+                    <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg"></div>
+
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-2">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+</div>
+
+<!--<div layout:fragment="content" >-->
+
+<!--    <div class="kt-portlet">-->
+<!--        <div class="kt-portlet__head">-->
+<!--            <div class="kt-portlet__head-label">-->
+<!--            <span class="kt-portlet__head-icon kt-hidden">-->
+<!--            <i class="la la-gear"></i>-->
+<!--            </span>-->
+<!--                <h3 class="kt-portlet__head-title">-->
+<!--                    Form Repeater Example-->
+<!--                </h3>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;begin::Form&ndash;&gt;-->
+<!--        <form th:action="@{/category}" th:object="${category}" method="post" class="kt-form">-->
+<!--            <div class="kt-portlet__body">-->
+<!--                <div class="kt-form__section kt-form__section&#45;&#45;first">-->
+<!--                    <div class="form-group row">-->
+<!--                        <label class="col-lg-2 col-form-label" for="name">name</label>-->
+<!--                        <div class="col-lg-4">-->
+<!--                            <input type="text" class="form-control" id="name" th:field="*{name}">-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group row">-->
+<!--                        <label class="col-lg-2 col-form-label" for="price">Price</label>-->
+<!--                        <div class="col-lg-4">-->
+<!--                            <input type="text" class="form-control" id="price" th:field="*{price}">-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group row">-->
+<!--                        <label class="col-lg-2 col-form-label" for="description">Description</label>-->
+<!--                        <div class="col-lg-4">-->
+<!--                            <input type="text" class="form-control" id="description" th:field="*{gender}">-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group row">-->
+<!--                        <label class="col-lg-2 col-form-label" for="image">Image</label>-->
+<!--                        <div class="col-lg-4">-->
+<!--                            <input type="text" class="form-control" id="image" th:field="*{image}">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group row">-->
+<!--                        <label class="col-lg-2 col-form-label" for="status">Status</label>-->
+<!--                        <div class="col-lg-4">-->
+<!--                            <input type="text" class="form-control" id="status" th:field="*{status}">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="kt-separator kt-separator&#45;&#45;border-dashed kt-separator&#45;&#45;space-lg"></div>-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="kt-portlet__foot">-->
+<!--                <div class="kt-form__actions">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-lg-2"></div>-->
+<!--                        <div class="col-lg-2">-->
+<!--                            <button type="submit" class="btn btn-success">Submit</button>-->
+<!--                            <button type="reset" class="btn btn-secondary">Reset</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--        &lt;!&ndash;end::Form&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+</body>
+</html>

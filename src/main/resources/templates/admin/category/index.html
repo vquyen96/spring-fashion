@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{admin/admin-layout/layout}">
+<head>
+    <title>Index</title>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <table id="dt-basic-checkbox" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th class="th-sm">Id
+            </th>
+            <th class="th-sm">Name
+            </th>
+            <th class="th-sm">Price
+            </th>
+            <th class="th-sm">Gender
+            </th>
+            <th class="th-sm">Image
+            </th>
+            <th class="th-sm">Status
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cate : ${categories}">
+            <td><span th:text="${cate.id}"></span></td>
+            <td><span th:text="${cate.name}"></span></td>
+            <td><span th:text="${cate.price}"></span></td>
+            <td><span th:text="${cate.gender}"></span></td>
+            <td><span th:text="${cate.image}"></span></td>
+            <td><span th:text="${cate.status}"></span></td>
+            <td>
+                <a th:href="@{category/{id}(id=${cate.id})}"><i style='font-size:24px' class='far fa-info-square'>&#xf044;</i></a>
+                <a th:href="@{category/edit/{id}(id=${cate.id})}"><i style='font-size:24px' class='far'>&#xf044;</i></a>
+                <a th:href="@{category/delete/{id}(id=${cate.id})}"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
