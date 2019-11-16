@@ -139,7 +139,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         order.setTotalPrice(getTotal());
         orderRepository.save(order);
         productRepository.flush();
-        products.clear();
+        productIds.clear();
     }
 
     @Override
