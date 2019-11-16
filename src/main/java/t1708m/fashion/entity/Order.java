@@ -24,26 +24,12 @@ public class Order {
     private String shipPhone;
     private String shipEmail;
     private String shipAddress;
-//    private long preferAt;
-//    private long deliveryAt;
+    private long preferAt;
+    private long deliveryAt;
     private long createdAt;
     private long updatedAt;
     private long deletedAt;
     private int status;
-
-//    /**
-//     * Order này được tạo bởi người dùng nào. Một người dùng có thể tạo nhiều order.
-//     * */
-//    @ManyToOne
-//    @JoinColumn(name = "created_by_id")
-//    private Account createdBy;
-//
-//    /**
-//     * Order này được update bởi Admin nào. Một admin có thể update nhiều order.
-//     * */
-//    @ManyToOne
-//    @JoinColumn(name = "updated_by_id")
-//    private Account updatedBy;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

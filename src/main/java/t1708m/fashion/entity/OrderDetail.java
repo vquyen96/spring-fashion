@@ -17,12 +17,6 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "order_id", insertable = false, updatable = false)
-    private long orderId;
-
-    @Column(name = "product_id", insertable = false, updatable = false)
-    private long productId;
-
     private int quantity;
     private BigDecimal unitPrice;
 
@@ -31,7 +25,7 @@ public class OrderDetail {
      * insertable = false, updatable = false (bắt buộc) để có thể dùng được ở trong class OrderDetailId.
      */
     @ManyToOne
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    @JoinColumn(name = "order_id")
     private Order order;
 
     /**
@@ -40,12 +34,13 @@ public class OrderDetail {
      * dùng được ở trong class OrderDetailId.
      */
     @ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    public OrderDetail(int quantity, Product product, BigDecimal unitPrice) {
+    public OrderDetail(int quantity, Product product, Order order, BigDecimal unitPrice) {
         this.quantity = quantity;
         this.product = product;
+        this.order = order;
         this.unitPrice = unitPrice;
     }
 }

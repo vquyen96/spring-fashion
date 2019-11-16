@@ -84,14 +84,15 @@ public class ClientController {
 
 
     @GetMapping("/add-product")
-    public String addProduct(Model model) {
+    public String addProduct(HttpServletRequest request) {
         productService.create(new Product("Esprit Ruffle Shirt", "customer/images/product-01.jpg", BigDecimal.valueOf(1664), 40, "hello"));
         productService.create(new Product("Herschel supply", "customer/images/product-02.jpg", BigDecimal.valueOf(3531), 40, "hello"));
         productService.create(new Product("Only Check Trouser", "customer/images/product-03.jpg", BigDecimal.valueOf(2550), 40, "hello"));
         productService.create(new Product("Classic Trench Coat", "customer/images/product-04.jpg", BigDecimal.valueOf(7500), 40, "hello"));
         productService.create(new Product("Front Pocket Jumper", "customer/images/product-05.jpg", BigDecimal.valueOf(4375), 40, "hello"));
         productService.create(new Product("Vintage Inspired Classic", "customer/images/product-06.jpg", BigDecimal.valueOf(9320), 40, "hello"));
-        return "ok";
+        String referer = request.getHeader("Referer");
+        return "redirect:"+ referer;
     }
 
     @PostMapping("/add-to-cart/{id}")
@@ -99,23 +100,16 @@ public class ClientController {
         Product product = productService.getById(id);
         productService.create(product);
         shoppingCartService.addProduct(product);
-        System.out.println("add to cart : "+product.getName());
-//        model.addAttribute("orderDetails", new ArrayList<OrderDetail>());
-//        model.addAttribute("products", shoppingCartService.getProductsInCart());
-//        model.addAttribute("total", shoppingCartService.getTotal());
-//        model.addAttribute("order", new Order());
+
+        //Chuyển về trang cũ
         String referer = request.getHeader("Referer");
         return "redirect:"+ referer;
-//        return "redirect:/";
     }
 
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model) throws NotEnoughProductsInStockException {
-        System.out.println(shoppingCartService.getTotal());
-//        model.addAttribute("orderDetails", orderDetails);
         Map<Long, Integer> productIds = shoppingCartService.getProductsInCart();
         Map<Product, Integer> products = new HashMap<>();
-
         for (Map.Entry<Long, Integer> entry : productIds.entrySet()) {
             Optional<Product> productOptional = productRepository.findById((Long) entry.getKey());
             if (productOptional.isPresent()) {

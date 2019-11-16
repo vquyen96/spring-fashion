@@ -63,44 +63,7 @@ public class ClientProductController {
     public String productDetail() {
         return "client/product-detail";
     }
-    @GetMapping("/add-to-cart")
-    public String addToCart(Model model) throws NotEnoughProductsInStockException {
-//        Product product1 = new Product("Converse All Star", " qw", BigDecimal.valueOf(340000), 40, "hello");
-//        OrderDetail orderDetail = new OrderDetail(1, product1);
-//        shoppingCartService.addOrderDetail(orderDetail);
-//        model.addAttribute("orderDetails", new ArrayList<OrderDetail>());
-//        model.addAttribute("products", shoppingCartService.getOrderDetailInCart());
-//        model.addAttribute("total", shoppingCartService.getTotal());
-//        model.addAttribute("order", new Order());
 
-        return "client/shopping-cart";
-    }
-    @GetMapping("/shopping-cart")
-    public String shoppingCart(Model model) throws NotEnoughProductsInStockException {
-        List<OrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();
-        System.out.println(orderDetails.size());
-        System.out.println(shoppingCartService.getOrderDetailInCart());
-        System.out.println(shoppingCartService.getTotal());
-        System.out.println(shoppingCartService.getTotal());
-        model.addAttribute("orderDetails", orderDetails);
-        model.addAttribute("products", shoppingCartService.getOrderDetailInCart());
-        model.addAttribute("total", shoppingCartService.getTotal());
-        model.addAttribute("order", new OrderDTO());
-        return "client/shopping-cart";
-    }
-
-    @GetMapping("/checkout")
-    public String checkOut(Model model) throws NotEnoughProductsInStockException {
-        Order order = new Order();
-        shoppingCartService.checkOut(order);
-        List<OrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();
-        model.addAttribute("orderDetails", orderDetails);
-        model.addAttribute("products", shoppingCartService.getOrderDetailInCart());
-        model.addAttribute("total", shoppingCartService.getTotal());
-        model.addAttribute("order", new Order());
-
-        return "client/shopping-cart";
-    }
     @GetMapping("/login")
     public String login(Model model) {
         return "login";
@@ -115,6 +78,4 @@ public class ClientProductController {
         model.addAttribute("productdetail", product);
         return "client/product-detail";
     }
-
-
 }

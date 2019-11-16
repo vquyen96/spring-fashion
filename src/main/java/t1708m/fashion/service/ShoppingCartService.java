@@ -10,18 +10,11 @@ import java.util.Map;
 public interface ShoppingCartService {
 
     void addProduct(Product product);
-    void addOrderDetail(OrderDetail orderDetail);
-
     void removeProduct(Product product);
 
     Map<Long, Integer> getProductsInCart();
-    List<OrderDetail> getOrderDetailInCart();
-
-    void checkout() throws NotEnoughProductsInStockException;
 
     void checkout(Order order) throws NotEnoughProductsInStockException;
-
-    void checkOut(Order order) throws NotEnoughProductsInStockException;
 
     double getTotal() throws NotEnoughProductsInStockException;
 }
