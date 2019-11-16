@@ -28,8 +28,8 @@ public class ProductService implements ProductServiceImp{
         return productRepository.findAll(specification, PageRequest.of(page - 1, limit));
     }
 
-    public Product getById(int id) {
-        return productRepository.findById(id);
+    public Product getById(Long id) {
+        return productRepository.findById(id).orElseThrow(null);
     }
 
     public Product create(Product product) {

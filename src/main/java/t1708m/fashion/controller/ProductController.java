@@ -32,7 +32,7 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public String detail(@PathVariable int id, Model model) {
+    public String detail(@PathVariable Long id, Model model) {
         Product product = productService.getById(id);
         if (product == null) {
             return "error/404";
@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/edit/{id}")
-    public String edit(@PathVariable int id, Model model) {
+    public String edit(@PathVariable Long id, Model model) {
         Product product = productService.getById(id);
         if (product == null) {
             return "error/404";
@@ -67,7 +67,7 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/edit/{id}")
-    public String update(@PathVariable int id, Model model, Product updateProduct) {
+    public String update(@PathVariable Long id, Model model, Product updateProduct) {
         Product product = productService.getById(id);
         if (product == null) {
             return "error/404";
@@ -88,7 +88,7 @@ public class ProductController {
     // viết ajax call.
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @ResponseBody
-    public ResponseEntity<Object> delete(@PathVariable int id) {
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
         HashMap<String, Object> mapResponse = new HashMap<>();
         Product product = productService.getById(id);
         if (product == null) {

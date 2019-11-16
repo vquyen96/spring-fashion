@@ -14,7 +14,7 @@ public interface ShoppingCartService {
 
     void removeProduct(Product product);
 
-    Map<Product, Integer> getProductsInCart();
+    Map<Long, Integer> getProductsInCart();
     List<OrderDetail> getOrderDetailInCart();
 
     void checkout() throws NotEnoughProductsInStockException;

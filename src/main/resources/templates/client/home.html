@@ -432,24 +432,29 @@
 			</div>
 
 			<div class="row isotope-grid" >
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" th:each="pro : ${products}" th:object="${products}">
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women" th:each="product : ${products}">
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
-							<img th:src="${pro.image}" alt="IMG-PRODUCT">
+							<img th:src="${product.photos}" alt="IMG-PRODUCT">
 
-							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
-							</a>
+<!--							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">-->
+<!--								Quick View-->
+<!--							</a>-->
+							<form action="#" method="post" th:action="@{/add-to-cart/} + ${product.id}">
+								<button th:type="submit" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+									Add to cart
+								</button>
+							</form>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<a th:href="@{/products/{id}(id=${pro.id})}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									<span th:text="${pro.name}"></span>
+								<a th:href="@{/products/{id}(id=${product.id})}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									<span th:text="${product.name}"></span>
 								</a>
 								<span class="stext-105 cl3">
-									<span th:text="${pro.price}"></span>
+									<span th:text="${product.price}"></span>
 								</span>
 							</div>
 

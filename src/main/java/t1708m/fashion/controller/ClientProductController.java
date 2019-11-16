@@ -65,13 +65,13 @@ public class ClientProductController {
     }
     @GetMapping("/add-to-cart")
     public String addToCart(Model model) throws NotEnoughProductsInStockException {
-        Product product1 = new Product("Converse All Star", BigDecimal.valueOf(340000), 40, "hello");
-        OrderDetail orderDetail = new OrderDetail(1, product1);
-        shoppingCartService.addOrderDetail(orderDetail);
-        model.addAttribute("orderDetails", new ArrayList<OrderDetail>());
-        model.addAttribute("products", shoppingCartService.getOrderDetailInCart());
-        model.addAttribute("total", shoppingCartService.getTotal());
-        model.addAttribute("order", new Order());
+//        Product product1 = new Product("Converse All Star", " qw", BigDecimal.valueOf(340000), 40, "hello");
+//        OrderDetail orderDetail = new OrderDetail(1, product1);
+//        shoppingCartService.addOrderDetail(orderDetail);
+//        model.addAttribute("orderDetails", new ArrayList<OrderDetail>());
+//        model.addAttribute("products", shoppingCartService.getOrderDetailInCart());
+//        model.addAttribute("total", shoppingCartService.getTotal());
+//        model.addAttribute("order", new Order());
 
         return "client/shopping-cart";
     }
@@ -107,7 +107,7 @@ public class ClientProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public String detail(@PathVariable int id, Model model) {
+    public String detail(@PathVariable Long id, Model model) {
         Product product = productService.getById(id);
         if (product == null) {
             return "error/404";

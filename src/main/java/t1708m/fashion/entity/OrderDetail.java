@@ -3,6 +3,7 @@ package t1708m.fashion.entity;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * Ăn theo HelloOrder, đặt là HelloOrderDetail cho đồng bộ.
@@ -23,7 +24,7 @@ public class OrderDetail {
     private long productId;
 
     private int quantity;
-    private double unitPrice;
+    private BigDecimal unitPrice;
 
     /**
      * Trả lời câu hỏi order detail này thuộc order nào. Trường order_id để
@@ -42,8 +43,9 @@ public class OrderDetail {
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
 
-    public OrderDetail(int quantity, Product product) {
+    public OrderDetail(int quantity, Product product, BigDecimal unitPrice) {
         this.quantity = quantity;
         this.product = product;
+        this.unitPrice = unitPrice;
     }
 }

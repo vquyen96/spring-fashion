@@ -37,20 +37,20 @@ public class CartController {
         this.productService = (ProductServiceImp) productService;
     }
 
-    @GetMapping("/shoppingCart")
-    public ModelAndView shoppingCart() throws NotEnoughProductsInStockException {
-        Product product = new Product("abc", BigDecimal.valueOf(30000), 40, "Hello");
-        OrderDetail orderDetail = new OrderDetail(2, product);
-        shoppingCartService.addOrderDetail(orderDetail);
-        System.out.println("Order detail : " + orderDetail.getProduct().getName());
-        logger.info("Order detail : " + orderDetail.getProduct().getName());
-        System.out.println(shoppingCartService.getTotal());
-        ModelAndView modelAndView = new ModelAndView("/shoppingCart");
-        modelAndView.addObject("orderDetails", shoppingCartService.getOrderDetailInCart());
-        modelAndView.addObject("products", shoppingCartService.getOrderDetailInCart());
-        modelAndView.addObject("total", "2");
-        return modelAndView;
-    }
+//    @GetMapping("/shoppingCart")
+//    public ModelAndView shoppingCart() throws NotEnoughProductsInStockException {
+//        Product product = new Product("abc", "1qw", BigDecimal.valueOf(30000), 40, "Hello");
+//        OrderDetail orderDetail = new OrderDetail(2, product);
+//        shoppingCartService.addOrderDetail(orderDetail);
+//        System.out.println("Order detail : " + orderDetail.getProduct().getName());
+//        logger.info("Order detail : " + orderDetail.getProduct().getName());
+//        System.out.println(shoppingCartService.getTotal());
+//        ModelAndView modelAndView = new ModelAndView("/shoppingCart");
+//        modelAndView.addObject("orderDetails", shoppingCartService.getOrderDetailInCart());
+//        modelAndView.addObject("products", shoppingCartService.getOrderDetailInCart());
+//        modelAndView.addObject("total", "2");
+//        return modelAndView;
+//    }
 
 //    @GetMapping("/shoppingCart/addProduct/{productId}")
 //    public ModelAndView addProductToCart(@PathVariable("productId") Long productId) {

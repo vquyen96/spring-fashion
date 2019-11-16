@@ -24,6 +24,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ProductRepository productRepository;
 
     private Map<Product, Integer> products = new HashMap<>();
+    private Map<Long, Integer> productIds = new HashMap<>();
 
     private List<OrderDetail> orderDetailMap = new ArrayList<>();
 
@@ -46,10 +47,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public void addProduct(Product product) {
-        if (products.containsKey(product)) {
-            products.replace(product, products.get(product) + 1);
+        if (productIds.containsKey(product.getId())) {
+            System.out.println(product.getName());
+            productIds.replace(product.getId(), productIds.get(product.getId()) + 1);
         } else {
-            products.put(product, 1);
+            System.out.println(product.getName()+"--"+product.getId());
+            productIds.put(product.getId(), 1);
         }
     }
 
@@ -88,8 +91,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      * @return unmodifiable copy of the map
      */
     @Override
-    public Map<Product, Integer> getProductsInCart() {
-        return Collections.unmodifiableMap(products);
+    public Map<Long, Integer> getProductsInCart() {
+        return Collections.unmodifiableMap(productIds);
     }
 
     /**
@@ -114,10 +117,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void checkout(Order order) throws NotEnoughProductsInStockException {
         order.setTotalPrice(this.getTotal());
         Set<OrderDetail> orderDetailSet = new HashSet<>(orderDetailMap);
-        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+        for (Map.Entry<Long, Integer> entry : productIds.entrySet()) {
             // Refresh quantity for every product before checking
-            System.out.println(entry.getKey().getId());
-            Optional<Product> productOptional = productRepository.findById((Long) entry.getKey().getId());
+            System.out.println(entry.getKey());
+            Optional<Product> productOptional = productRepository.findById((Long) entry.getKey());
             if (productOptional.isPresent()) {
                 Product product = productOptional.get();
                 System.out.println(product.getName());
@@ -125,7 +128,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     throw new NotEnoughProductsInStockException(product);
                 product.setQuantity(product.getQuantity() - entry.getValue());
                 productRepository.save(product);
-                OrderDetail orderDetail = new OrderDetail(entry.getValue(), product);
+                OrderDetail orderDetail = new OrderDetail(entry.getValue(), product, product.getPrice());
                 orderDetail.setOrder(order);
                 orderDetailRepository.save(orderDetail);
                 orderDetailSet.add(orderDetail);
@@ -133,6 +136,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 //        order.setOrderDetails(orderDetailSet);
 //        System.out.println(order.getOrderDetails().size());
+        order.setTotalPrice(getTotal());
         orderRepository.save(order);
         productRepository.flush();
         products.clear();
@@ -163,9 +167,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 //        }
 
         int total = 0;
-        for(Map.Entry<Product, Integer> entry : products.entrySet()) {
+        for(Map.Entry<Long, Integer> entry : productIds.entrySet()) {
 
-            Optional<Product> productOptional = productRepository.findById((Long) entry.getKey().getId());
+            Optional<Product> productOptional = productRepository.findById((Long) entry.getKey());
             if (productOptional.isPresent()) {
                 Product product = productOptional.get();
                 if (product.getQuantity() < entry.getValue())

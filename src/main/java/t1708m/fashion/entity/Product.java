@@ -46,8 +46,9 @@ public class Product {
     @JoinColumn(name = "cloth_id")
     private Cloth cloth; // dùng mảnh vải nào ?
 
-    public Product(String name, BigDecimal price, int quantity, String description) {
+    public Product(String name, String photos, BigDecimal price, int quantity, String description) {
         this.name = name;
+        this.photos = photos;
         this.price = price;
         this.quantity = quantity;
         this.description = description;
