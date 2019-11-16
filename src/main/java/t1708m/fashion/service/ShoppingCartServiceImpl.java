@@ -112,22 +112,27 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      */
     @Override
     public void checkout(Order order) throws NotEnoughProductsInStockException {
-        Product product;
         order.setTotalPrice(this.getTotal());
         Set<OrderDetail> orderDetailSet = new HashSet<>(orderDetailMap);
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             // Refresh quantity for every product before checking
-            product = productRepository.findById((int) entry.getKey().getId());
-            if (product.getQuantity() < entry.getValue())
-                throw new NotEnoughProductsInStockException(product);
-            product.setQuantity(product.getQuantity() - entry.getValue());
-            productRepository.save(product);
-            OrderDetail orderDetail = new OrderDetail(entry.getValue(), product);
-            orderDetail.setOrder(order);
-            orderDetailRepository.save(orderDetail);
-            orderDetailSet.add(orderDetail);
+            System.out.println(entry.getKey().getId());
+            Optional<Product> productOptional = productRepository.findById((Long) entry.getKey().getId());
+            if (productOptional.isPresent()) {
+                Product product = productOptional.get();
+                System.out.println(product.getName());
+                if (product.getQuantity() < entry.getValue())
+                    throw new NotEnoughProductsInStockException(product);
+                product.setQuantity(product.getQuantity() - entry.getValue());
+                productRepository.save(product);
+                OrderDetail orderDetail = new OrderDetail(entry.getValue(), product);
+                orderDetail.setOrder(order);
+                orderDetailRepository.save(orderDetail);
+                orderDetailSet.add(orderDetail);
+            }
         }
-        order.setOrderDetails(orderDetailSet);
+//        order.setOrderDetails(orderDetailSet);
+//        System.out.println(order.getOrderDetails().size());
         orderRepository.save(order);
         productRepository.flush();
         products.clear();
@@ -159,11 +164,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         int total = 0;
         for(Map.Entry<Product, Integer> entry : products.entrySet()) {
-            Product product = productRepository.findById((int) entry.getKey().getId());
-            if (product.getQuantity() < entry.getValue())
-                throw new NotEnoughProductsInStockException(product);
 
-            total += product.getPrice().intValue() * entry.getValue();
+            Optional<Product> productOptional = productRepository.findById((Long) entry.getKey().getId());
+            if (productOptional.isPresent()) {
+                Product product = productOptional.get();
+                if (product.getQuantity() < entry.getValue())
+                    throw new NotEnoughProductsInStockException(product);
+
+                total += product.getPrice().intValue() * entry.getValue();
+            }
         }
         return Double.valueOf(total);
     }

@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import t1708m.fashion.DTO.OrderDTO;
+import t1708m.fashion.entity.Account;
 import t1708m.fashion.entity.Order;
 import t1708m.fashion.entity.OrderDetail;
 import t1708m.fashion.entity.Product;
+import t1708m.fashion.exception.NotEnoughProductsInStockException;
+import t1708m.fashion.repository.AccountRepository;
 import t1708m.fashion.service.ProductService;
 import t1708m.fashion.service.ShoppingCartService;
 
@@ -22,6 +25,9 @@ import java.util.List;
 public class ClientController {
     @Autowired
     ProductService productService;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     @Autowired
     ShoppingCartService shoppingCartService;
@@ -72,8 +78,9 @@ public class ClientController {
     }
 
     @GetMapping("/add-to-cart")
-    public String addToCart(Model model) {
+    public String addToCart(Model model) throws NotEnoughProductsInStockException {
         Product product = new Product("Converse All Star", BigDecimal.valueOf(340000), 40, "hello");
+        productService.create(product);
 //        HelloOrderDetail orderDetail = new HelloOrderDetail(1, product1);
 //        shoppingCartService.addOrderDetail(orderDetail);
         shoppingCartService.addProduct(product);
@@ -86,26 +93,21 @@ public class ClientController {
     }
 
     @GetMapping("/shopping-cart")
-    public String shoppingCart(Model model) {
-        List<OrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();
-        System.out.println(orderDetails.size());
-        System.out.println(shoppingCartService.getOrderDetailInCart());
+    public String shoppingCart(Model model) throws NotEnoughProductsInStockException {
         System.out.println(shoppingCartService.getTotal());
-        System.out.println(shoppingCartService.getTotal());
-        model.addAttribute("orderDetails", orderDetails);
-        model.addAttribute("products", shoppingCartService.getOrderDetailInCart());
+//        model.addAttribute("orderDetails", orderDetails);
+        model.addAttribute("products", shoppingCartService.getProductsInCart());
         model.addAttribute("total", shoppingCartService.getTotal());
         model.addAttribute("order", new OrderDTO());
         return "client/shopping-cart";
     }
 
     @GetMapping("/checkout")
-    public String checkOut(Model model) {
-        Order order = new Order();
-        shoppingCartService.checkOut(order);
-        List<OrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();
-        model.addAttribute("orderDetails", orderDetails);
-        model.addAttribute("products", shoppingCartService.getOrderDetailInCart());
+    public String checkOut(Model model) throws NotEnoughProductsInStockException {
+        Account account = accountRepository.save(new Account("quyen96", "vquyenaaa@gmail.com", 1));
+        Order order = new Order("Quyen", "HaNoi", account);
+        shoppingCartService.checkout(order);
+        model.addAttribute("products", shoppingCartService.getProductsInCart());
         model.addAttribute("total", shoppingCartService.getTotal());
         model.addAttribute("order", new Order());
 

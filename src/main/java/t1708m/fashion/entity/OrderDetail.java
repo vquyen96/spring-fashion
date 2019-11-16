@@ -1,6 +1,5 @@
 package t1708m.fashion.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -8,14 +7,21 @@ import javax.persistence.*;
 /**
  * Ăn theo HelloOrder, đặt là HelloOrderDetail cho đồng bộ.
  */
-@Data
 @Getter
 @Setter
 @Entity
 public class OrderDetail {
 
-    @EmbeddedId
-    private OrderDetailId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "order_id", insertable = false, updatable = false)
+    private long orderId;
+
+    @Column(name = "product_id", insertable = false, updatable = false)
+    private long productId;
+
     private int quantity;
     private double unitPrice;
 

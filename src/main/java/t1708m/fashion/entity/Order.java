@@ -1,6 +1,5 @@
 package t1708m.fashion.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,42 +10,45 @@ import java.util.Set;
  * Để tên là Order sẽ gây lỗi khi mapping vào database (từ khoá đặc biệt.)
  * Có thể fix bằng cách thêm @Table với name khác. Tuy nhiên trong trường hợp này đổi thành HelloOrder cho mới mẻ.
  * */
-@Data
 @Getter
 @Setter
 @Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private double price;
     private double totalPrice;
     private String shipName;
     private String shipPhone;
     private String shipEmail;
     private String shipAddress;
-
-    private long preferAt;
-    private long deliveryAt;
+//    private long preferAt;
+//    private long deliveryAt;
     private long createdAt;
     private long updatedAt;
     private long deletedAt;
     private int status;
 
-    /**
-     * Order này được tạo bởi người dùng nào. Một người dùng có thể tạo nhiều order.
-     * */
-    @ManyToOne
-    @JoinColumn(name = "created_by_id")
-    private Account createdBy;
+//    /**
+//     * Order này được tạo bởi người dùng nào. Một người dùng có thể tạo nhiều order.
+//     * */
+//    @ManyToOne
+//    @JoinColumn(name = "created_by_id")
+//    private Account createdBy;
+//
+//    /**
+//     * Order này được update bởi Admin nào. Một admin có thể update nhiều order.
+//     * */
+//    @ManyToOne
+//    @JoinColumn(name = "updated_by_id")
+//    private Account updatedBy;
 
-    /**
-     * Order này được update bởi Admin nào. Một admin có thể update nhiều order.
-     * */
     @ManyToOne
-    @JoinColumn(name = "updated_by_id")
-    private Account updatedBy;
+    @JoinColumn(name = "user_id", nullable = false)
+    private Account account;
+
 
     /**
      * Một order có thể có nhiều order detail, đây là danh sách order detail của order này.
@@ -75,5 +77,12 @@ public class Order {
     }
 
     public Order() {
+    }
+
+    public Order(String shipName, String shipAddress, Account account) {
+        this.shipName = shipName;
+        this.shipAddress = shipAddress;
+        this.account = account;
+        this.status = Status.CONFIRMED.getValue();
     }
 }

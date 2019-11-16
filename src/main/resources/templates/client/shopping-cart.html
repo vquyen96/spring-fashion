@@ -251,19 +251,20 @@
 
 		<div class="header-cart-content flex-w js-pscroll">
 			<ul class="header-cart-wrapitem w-full">
-				<li class="header-cart-item flex-w flex-t m-b-12" th:each="orderDetail: ${orderDetails}">
+				<!--/*@thymesVar id="instanceMap" type=""*/-->
+				<li class="header-cart-item flex-w flex-t m-b-12" th:each="product: ${products}">
 					<div class="header-cart-item-img">
 						<img src="customer/images/item-cart-01.jpg" alt="IMG">
 					</div>
 
 					<div class="header-cart-item-txt p-t-8">
-						<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04" th:text="${orderDetail.product.name}">
+						<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04" th:text="${product.key.name}">
 							White Shirt Pleat
 						</a>
 
 						<span class="header-cart-item-info">
-							<span th:text="${orderDetail.quantity}"></span> x
-							<span th:text="${orderDetail.product.price}"></span>
+							<span th:text="${product.value}"></span> x
+							<span th:text="${product.key.price}"></span>
 							<!--								1 x $19.00-->
 						</span>
 					</div>

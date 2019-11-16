@@ -38,7 +38,7 @@ public class CartController {
     }
 
     @GetMapping("/shoppingCart")
-    public ModelAndView shoppingCart() {
+    public ModelAndView shoppingCart() throws NotEnoughProductsInStockException {
         Product product = new Product("abc", BigDecimal.valueOf(30000), 40, "Hello");
         OrderDetail orderDetail = new OrderDetail(2, product);
         shoppingCartService.addOrderDetail(orderDetail);
@@ -52,25 +52,25 @@ public class CartController {
         return modelAndView;
     }
 
-    @GetMapping("/shoppingCart/addProduct/{productId}")
-    public ModelAndView addProductToCart(@PathVariable("productId") Long productId) {
-        productService.findById(productId).ifPresent(shoppingCartService::addProduct);
-        return shoppingCart();
-    }
-
-    @GetMapping("/shoppingCart/removeProduct/{productId}")
-    public ModelAndView removeProductFromCart(@PathVariable("productId") Long productId) {
-        productService.findById(productId).ifPresent(shoppingCartService::removeProduct);
-        return shoppingCart();
-    }
-
-    @PostMapping("/shoppingCart/checkout")
-    public ModelAndView checkout(@ModelAttribute Model model,  @Valid Order order) {
-        try {
-            shoppingCartService.checkout();
-        } catch (NotEnoughProductsInStockException e) {
-            return shoppingCart().addObject("outOfStockMessage", e.getMessage());
-        }
-        return shoppingCart();
-    }
+//    @GetMapping("/shoppingCart/addProduct/{productId}")
+//    public ModelAndView addProductToCart(@PathVariable("productId") Long productId) {
+//        productService.findById(productId).ifPresent(shoppingCartService::addProduct);
+//        return shoppingCart();
+//    }
+//
+//    @GetMapping("/shoppingCart/removeProduct/{productId}")
+//    public ModelAndView removeProductFromCart(@PathVariable("productId") Long productId) {
+//        productService.findById(productId).ifPresent(shoppingCartService::removeProduct);
+//        return shoppingCart();
+//    }
+//
+//    @PostMapping("/shoppingCart/checkout")
+//    public ModelAndView checkout(@ModelAttribute Model model,  @Valid Order order) {
+//        try {
+//            shoppingCartService.checkout();
+//        } catch (NotEnoughProductsInStockException e) {
+//            return shoppingCart().addObject("outOfStockMessage", e.getMessage());
+//        }
+//        return shoppingCart();
+//    }
 }

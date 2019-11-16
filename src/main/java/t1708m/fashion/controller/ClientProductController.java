@@ -8,6 +8,7 @@ import t1708m.fashion.DTO.OrderDTO;
 import t1708m.fashion.entity.Order;
 import t1708m.fashion.entity.OrderDetail;
 import t1708m.fashion.entity.Product;
+import t1708m.fashion.exception.NotEnoughProductsInStockException;
 import t1708m.fashion.service.ProductService;
 import t1708m.fashion.service.ShoppingCartService;
 
@@ -63,7 +64,7 @@ public class ClientProductController {
         return "client/product-detail";
     }
     @GetMapping("/add-to-cart")
-    public String addToCart(Model model) {
+    public String addToCart(Model model) throws NotEnoughProductsInStockException {
         Product product1 = new Product("Converse All Star", BigDecimal.valueOf(340000), 40, "hello");
         OrderDetail orderDetail = new OrderDetail(1, product1);
         shoppingCartService.addOrderDetail(orderDetail);
@@ -75,7 +76,7 @@ public class ClientProductController {
         return "client/shopping-cart";
     }
     @GetMapping("/shopping-cart")
-    public String shoppingCart(Model model) {
+    public String shoppingCart(Model model) throws NotEnoughProductsInStockException {
         List<OrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();
         System.out.println(orderDetails.size());
         System.out.println(shoppingCartService.getOrderDetailInCart());
@@ -89,7 +90,7 @@ public class ClientProductController {
     }
 
     @GetMapping("/checkout")
-    public String checkOut(Model model) {
+    public String checkOut(Model model) throws NotEnoughProductsInStockException {
         Order order = new Order();
         shoppingCartService.checkOut(order);
         List<OrderDetail> orderDetails = shoppingCartService.getOrderDetailInCart();

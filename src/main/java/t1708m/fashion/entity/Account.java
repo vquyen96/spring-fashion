@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
 @Getter
 @Setter
 @Entity
@@ -28,26 +27,26 @@ public class Account {
     private long deletedAt;
     private int status;
 
-    /**
-     * Tài khoản có thể bị update thông tin bởi admin. Trường này trả lời tài khoản update bởi ai.
-     */
-    @OneToOne
-    @JoinColumn(name = "updated_by")
-    private Account updatedBy;
-
-    /**
-     * Tài khoản của người dùng có thể tạo nhiều order, trường này thể hiện những order của người dùng này.
-     */
-    @OneToMany(mappedBy = "createdBy")
-    private Set<Order> createdOrders;
-
-    /**
-     * Tài khoản admin có thể update trạng thái order, chuyển các trạng thái thành công, huỷ... Trường này
-     * thể hiện danh sách những order được update bởi tài khoản admin này.
-     * Trường này chỉ tồn tại nếu là admin hệ thống. Role là 99.
-     */
-    @OneToMany(mappedBy = "updatedBy")
-    private Set<Order> updatedOrders;
+//    /**
+//     * Tài khoản có thể bị update thông tin bởi admin. Trường này trả lời tài khoản update bởi ai.
+//     */
+//    @OneToOne
+//    @JoinColumn(name = "updated_by")
+//    private Account updatedBy;
+//
+//    /**
+//     * Tài khoản của người dùng có thể tạo nhiều order, trường này thể hiện những order của người dùng này.
+//     */
+//    @OneToMany(mappedBy = "createdBy")
+//    private Set<Order> createdOrders;
+//
+//    /**
+//     * Tài khoản admin có thể update trạng thái order, chuyển các trạng thái thành công, huỷ... Trường này
+//     * thể hiện danh sách những order được update bởi tài khoản admin này.
+//     * Trường này chỉ tồn tại nếu là admin hệ thống. Role là 99.
+//     */
+//    @OneToMany(mappedBy = "updatedBy")
+//    private Set<Order> updatedOrders;
 
     public enum Role {
 
@@ -87,4 +86,12 @@ public class Account {
         }
     }
 
+    public Account(String username, String email, int role) {
+        this.username = username;
+        this.email = email;
+        this.role = role;
+    }
+
+    public Account() {
+    }
 }
